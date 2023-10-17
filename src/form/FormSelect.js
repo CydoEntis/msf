@@ -1,4 +1,4 @@
-import Element from "./Element.js";
+import Element from "../element/Element.js";
 import FormOption from "./FormOption.js";
 
 export default class FormSelect extends Element {

@@ -1,4 +1,4 @@
-import Element from "./Element.js";
+import Element from "../element/Element.js";
 
 export default class FormOption extends Element {
   constructor(value, text = "") {

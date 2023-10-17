@@ -30,4 +30,10 @@ export default class Element {
   appendChildElement(child) {
     this.element.appendChild(child.element);
   }
+
+  appendChildElements(elements) {
+    for (const element of elements) {
+      this.element.appendChild(element.element);
+    }
+  }
 }
