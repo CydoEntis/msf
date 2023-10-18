@@ -21,6 +21,10 @@
   font-weight: bold;
 }
 
+.error{
+  font-size: 14px;
+}
+
 @keyframes slide {
   0% {
     transform: translateX(200%);

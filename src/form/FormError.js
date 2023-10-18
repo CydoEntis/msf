@@ -1,9 +1,8 @@
 import Element from "../element/Element.js";
 
 export default class FormError extends Element {
-  constructor(errorMessage) {
-    super("li", "small text-danger p-0 m-0 mt-1");
-    this.setErrorMessage(errorMessage);
+  constructor() {
+    super("li", "error text-danger p-0 m-0 mt-1");
   }
 
   setErrorMessage(errorMessage) {

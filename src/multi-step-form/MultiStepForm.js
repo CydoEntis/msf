@@ -4,25 +4,50 @@ import FormStep from "../form/FormStep.js";
 import FormTitle from "../form/FormTitle.js";
 import Progressbar from "../progress-bar/Progressbar.js";
 import { constraints } from "../constraints.js";
+import ButtonGroup from "../form/ButtonGroup.js";
+import FormGroup from "../form/FormGroup.js";
 
 export default class MultiStepForm extends Element {
-  constructor(parentEl, title, stepsData, classes, id) {
+  constructor(id) {
     super("form", "py-3 px-2", id);
-    parentEl.appendChild(this.element);
-    this.title = new FormTitle(title);
-    this.progressbar = new Progressbar();
-    this.stepsData = stepsData;
     this.steps = [];
-    this.listOfSteps = [];
     this.currentStep = 0;
     this.init();
   }
 
+  bindToParent(parentElement) {
+    parentElement.appendChild(this.element);
+  }
+
+  setFormTitle(title) {
+    this.title = new FormTitle(title);
+    this.appendChildElement(this.title);
+  }
+
+  addProgressBar() {
+    this.progressbar = new Progressbar();
+    this.appendChildElement(this.progressbar);
+  }
+
+  createFormSteps(steps) {
+    for (const step of steps) {
+      const newStep = new FormStep(step.id);
+      newStep.setHeading(step.heading);
+
+      for(const group of step.groups) {
+        newStep.createFormGroup(group);
+      }
+
+      newStep.createButtonGroup(this.currentStep, steps.length);
+
+      this.appendChildElement(newStep);
+      this.steps.push(newStep);
+    }
+    this.displayCurrentStep();
+  }
+
   init() {
     this.setupFormStyles();
-    this.appendChildElement(this.title);
-    this.appendChildElement(this.progressbar);
-    this.addSteps(this.stepsData);
     this.displayCurrentStep();
     this.setupEventListeners();
   }
@@ -30,21 +55,8 @@ export default class MultiStepForm extends Element {
   setupFormStyles() {
     this.element.style.maxWidth = "600px";
     this.element.style.minHeight = "400px";
-    // this.element.classList.add("border", "border-warning");
   }
 
-  addSteps(steps) {
-    for (const step of steps) {
-      const newStep = new FormStep(
-        step.id,
-        step.heading,
-        step.groups,
-        steps.length
-      );
-      this.steps.push(newStep);
-      this.appendChildElement(newStep);
-    }
-  }
 
   setupEventListeners() {
     this.element.addEventListener("click", (e) => this.navigationHandler(e));
@@ -60,34 +72,34 @@ export default class MultiStepForm extends Element {
 
   displayCurrentStep() {
     const steps = this.element.querySelectorAll(".step");
-    this.listOfSteps = Array.from(steps);
+
     steps.forEach((step, index) => {
       step.classList.toggle("active-step", index === this.currentStep);
     });
   }
 
-  getCurrFormStepGroups() {
-    return this.steps[this.currentStep].getFormGroups();
-  }
+  // getCurrFormStepGroups() {
+  //   return this.steps[this.currentStep].getFormGroups();
+  // }
 
   displayFormErrors(errors) {
-    const formGroups = this.getCurrFormStepGroups();
+    const formGroups = this.steps[this.currentStep].formGroups;
 
     for (const group of formGroups) {
-      const inputName = group.getInput().getName();
-      const errorsElement = group.getErrors();
+      console.log(group)
+      // const errorsElement = group.getErrors();
 
-      const currentErrors = errorsElement.getAllErrors();
+      // const currentErrors = errorsElement.getAllErrors();
 
-      if (errors[inputName]) {
-        for (const error of errors[inputName]) {
-          if (!currentErrors.includes(error)) {
-            errorsElement.addError(error);
-          }
-        }
-      } else {
-        errorsElement.clearErrors();
-      }
+      // if (errors[inputName]) {
+      //   for (const error of errors[inputName]) {
+      //     if (!currentErrors.includes(error)) {
+      //       errorsElement.addError(error);
+      //     }
+      //   }
+      // } else {
+      //   errorsElement.clearErrors();
+      // }
     }
   }
 
@@ -106,8 +118,8 @@ export default class MultiStepForm extends Element {
       this.displayFormErrors(errors);
       return;
     }
-
-    if (this.currentStep < this.listOfSteps.length - 1) {
+    
+    if (this.currentStep < this.steps.length - 1) {
       this.currentStep++;
       this.displayCurrentStep();
       this.progressbar.setProgressWidth(this.currentStep, this.steps.length);

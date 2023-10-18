@@ -5,13 +5,47 @@ import FormLabel from "./FormLabel.js";
 import FormSelect from "./FormSelect.js";
 
 export default class FormGroup extends Element {
-  constructor(name, labelText, variant, type) {
+  constructor() {
     super("div", "form-group px-4");
-    this.label = this.setFormLabel(name, labelText);
-    this.input = this.setInput(variant, name, type);
-    this.errors = this.setErrors();
+    this.formLabel;
+    this.formInput;
+    this.formSelect;
+    this.formErrors;
   }
 
+  createFormLabel(htmlFor, labelText) {
+    const label = new FormLabel(htmlFor, labelText);
+    label.setHtmlFor(htmlFor);
+    label.setLabelText(labelText);
+    this.appendChildElement(label);
+    this.formLabel = label;
+  }
+
+  createFormInput(variant, type, id, name, options) {
+    if (variant === "input") {
+      const formInput = new FormInput();
+      formInput.setType(type);
+      formInput.setId(id);
+      formInput.setName(name);
+
+      this.appendChildElement(formInput);
+      this.formInput = formInput;
+    } else if (variant === "select") {
+      const formSelect = new FormSelect();
+      formSelect.addOptions(options);
+      this.appendChildElement(formSelect);
+      this.formSelect = formSelect;
+    }
+  }
+
+  createFormErrors() {
+    const errors = new FormErrors();
+    this.appendChildElement(errors);
+    this.formErrors = errors;
+  }
+
+
+  // Don't think I need this anymore??
   setFormLabel(name, labelText) {
     const label = new FormLabel(name, labelText);
     this.appendChildElement(label);

@@ -1,9 +1,15 @@
 import Element from "../element/Element.js";
 
 export default class FormLabel extends Element {
-  constructor(isFor, labelText) {
+  constructor() {
     super("label");
-    this.element.htmlFor = isFor;
-    this.element.innerText = labelText;
+  }
+
+  setHtmlFor(htmlFor) {
+    this.element.htmlFor = htmlFor;
+  }
+
+  setLabelText(labelText) {
+    this.element.textContent = labelText;
   }
 }

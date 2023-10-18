@@ -3,7 +3,7 @@ import FormError from "./FormError.js";
 
 export default class FormErrors extends Element {
   constructor() {
-    super("ul", "small text-danger p-0 m-0 mt-1");
+    super("ul", "error text-danger p-0 m-0 mt-1");
     this.errors = new Map();
   }
 

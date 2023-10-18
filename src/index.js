@@ -19,12 +19,16 @@ const steps = [
     heading: "Your Name?",
     groups: [
       {
+        id: "firstName",
+        htmlFor: "firstName",
         name: "firstName",
         labelText: "First Name",
         variant: "input",
         type: "text",
       },
       {
+        id: "lastName",
+        htmlFor: "lastName",
         name: "lastName",
         labelText: "Last Name",
         variant: "input",
@@ -37,6 +41,8 @@ const steps = [
     heading: "Your Email?",
     groups: [
       {
+        id: "email",
+        htmlFor: "email",
         name: "email",
         labelText: "Email",
         variant: "input",
@@ -49,6 +55,8 @@ const steps = [
     heading: "Best Number To Reach You?",
     groups: [
       {
+        id: "phoneNumber",
+        htmlFor: "phoneNumber",
         name: "phoneNumber",
         labelText: "Phone Number",
         variant: "input",
@@ -61,6 +69,8 @@ const steps = [
     heading: "When Were You Born?",
     groups: [
       {
+        id: "dateOfBirth",
+        htmlFor: "dateOfBirth",
         name: "dateOfBirth",
         labelText: "Date of Birth?",
         variant: "input",
@@ -73,12 +83,16 @@ const steps = [
     heading: "Whare Are You From?",
     groups: [
       {
+        id: "address",
+        htmlFor: "address",
         name: "address",
         labelText: "Address",
         variant: "input",
         type: "text",
       },
       {
+        id: "city",
+        htmlFor: "city",
         name: "city",
         labelText: "City",
         variant: "input",
@@ -91,6 +105,8 @@ const steps = [
     heading: "What Is Your Zip Code?",
     groups: [
       {
+        id: "zip",
+        htmlFor: "zip",
         name: "zip",
         labelText: "Zip Code",
         variant: "input",
@@ -103,6 +119,8 @@ const steps = [
     heading: "What State Do You Live In?",
     groups: [
       {
+        id: "state",
+        htmlFor: "state",
         name: "state",
         labelText: "State",
         variant: "select",
@@ -116,6 +134,8 @@ const steps = [
     heading: "What Kind Of Vehicle Do You Drive",
     groups: [
       {
+        id: "make",
+        htmlFor: "make",
         name: "make",
         labelText: "Make",
         variant: "select",
@@ -123,6 +143,8 @@ const steps = [
         options: [],
       },
       {
+        id: "model",
+        htmlFor: "model",
         name: "model",
         labelText: "Model",
         variant: "select",
@@ -135,6 +157,8 @@ const steps = [
     heading: "What Year Is Your Vehicle",
     groups: [
       {
+        id: "vehicleYear",
+        htmlFor: "vehicleYear",
         name: "vehicleYear",
         labelText: "Vehicle Year",
         variant: "input",
@@ -147,6 +171,8 @@ const steps = [
     heading: "How Many Miles Does Your Vehicle Have?",
     groups: [
       {
+        id: "vehicleMiles",
+        htmlFor: "vehicleMiles",
         name: "vehicleMiles",
         labelText: "VehicleMiles",
         variant: "input",
@@ -159,6 +185,8 @@ const steps = [
     heading: "What Is Your VIN Number?",
     groups: [
       {
+        id: "vin",
+        htmlFor: "vin",
         name: "vin",
         labelText: "Vin",
         variant: "input",
@@ -168,10 +196,8 @@ const steps = [
   },
 ];
 
-const msf = new MultiStepForm(
-  rootContainer,
-  "personalized rates",
-  steps,
-  "",
-  "multi-step-form"
-);
+const msf = new MultiStepForm();
+msf.bindToParent(rootContainer);
+msf.setFormTitle("Personalized Rates");
+msf.addProgressBar();
+msf.createFormSteps(steps);

@@ -2,7 +2,7 @@ import Element from "../element/Element.js";
 import FormOption from "./FormOption.js";
 
 export default class FormSelect extends Element {
-  constructor() {
+  constructor(options) {
     super("select", "custom-select");
   }
 
@@ -14,5 +14,9 @@ export default class FormSelect extends Element {
     for (let option of options) {
       this.addOption(option);
     }
+  }
+
+  addEventListener(type, callback) {
+    this.element.addEventlisener(`${type}`, callback);
   }
 }
